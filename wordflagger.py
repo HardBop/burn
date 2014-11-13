@@ -45,29 +45,31 @@ def print_top(filename,freq) :
               'yoga','chill','friends','namiste','artcar','children','kids',
               'minors','enema']
   supresslist = ['and','we','the','burning','man','playa','to','of','our',
-                  'that','will','have','a','be','us','you','know','are']
+                  'that','will','have','a','be','us','you','know','are','i','it',
+                  'as','at','with','on','for','this']
 # this last step added to give sort in order of most freq to least
 # created freq filter so any keyword with more than 3 occurances is returned
 #   --> Perhaps make the freq a configurable parameter read in at begining.
   vsort = sorted(word_count.items(), key= lambda t : t[1], reverse=True)
+  print freq
   for elem in vsort :
-    if elem[0] not in supresslist and elem[1] >= freq : print elem
+    if elem[0] not in supresslist and elem[1] >= int(freq) : print elem
     elif elem[0] in flaglist : print elem 
   return
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
-  if len(sys.argv) != 4:
-    print 'usage: ./wordcount.py {--count | --topcount} file min_freq'
+  if len(sys.argv) < 3:
+    print 'usage: ./wordcount.py file {--count | --topcount [min_freq]}'
     sys.exit(1)
 
-  option = sys.argv[1]
-  filename = sys.argv[2]
+  filename = sys.argv[1]
+  option = sys.argv[2]
   if option == '--count':
     print_words(filename)
   elif option == '--topcount':
-    freq = sys.argv[3]  
+    freq = sys.argv[3]
     print_top(filename,freq)
   else:
     print 'unknown option: ' + option
